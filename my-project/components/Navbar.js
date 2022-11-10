@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-import { Bars4Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
 
 const navigation = [
@@ -35,7 +35,7 @@ const Navbar = () => {
                       {open ? (
                         <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                       ) : (
-                        <Bars4Icon
+                        <Bars3Icon
                           className="block h-6 w-6"
                           aria-hidden="true"
                         />

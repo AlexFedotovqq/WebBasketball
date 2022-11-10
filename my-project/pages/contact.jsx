@@ -123,7 +123,7 @@ export default function Contact() {
                                                     transition-all
                                                     duration-200
                                                     bg-transparent
-                                                    border border-gray-300
+                                                    border border-black
                                                     rounded-full
                                                     w-7
                                                     h-7
@@ -154,7 +154,7 @@ export default function Contact() {
                                                     transition-all
                                                     duration-200
                                                     bg-transparent
-                                                    border border-gray-300
+                                                    border border-black
                                                     rounded-full
                                                     w-7
                                                     h-7
@@ -183,7 +183,7 @@ export default function Contact() {
                                                     transition-all
                                                     duration-200
                                                     bg-transparent
-                                                    border border-gray-300
+                                                    border border-black
                                                     rounded-full
                                                     w-7
                                                     h-7
@@ -216,7 +216,7 @@ export default function Contact() {
                                                     transition-all
                                                     duration-200
                                                     bg-transparent
-                                                    border border-gray-300
+                                                    border border-black
                                                     rounded-full
                                                     w-7
                                                     h-7

@@ -35,7 +35,8 @@ const product = {
   ],
   colors: [
     { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-    { name: 'Heather Grey', bgColor: 'bg-gray-400', selectedColor: 'ring-gray-400' },
+    { name: 'Heather Grey', bgColor: 'bg-blue-700', selectedColor: 'ring-blue-700' },
+    { name: 'Orange', bgColor: 'bg-orange-500', selectedColor: 'ring-orange-500' },
   ],
   sizes: [
     { name: 'XXS', inStock: true },
@@ -117,7 +118,7 @@ export default function Example() {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          product.rating > rating ? 'text-yellow-400' : 'text-gray-200',
+                          product.rating > rating ? 'text-yellow-400' : 'text-gray-400',
                           'h-5 w-5 flex-shrink-0'
                         )}
                         aria-hidden="true"

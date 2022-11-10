@@ -34,7 +34,7 @@ const product = {
     },
   ],
   colors: [
-    { name: 'Pink', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
+    { name: 'Pink', bgColor: 'bg-pink-700', selectedColor: 'ring-pink-700' },
   ],
   sizes: [
     { name: 'OSFM', inStock: true },
@@ -112,7 +112,7 @@ export default function Example() {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          product.rating > rating ? 'text-yellow-400' : 'text-gray-200',
+                          product.rating > rating ? 'text-yellow-400' : 'text-gray-400',
                           'h-5 w-5 flex-shrink-0'
                         )}
                         aria-hidden="true"
