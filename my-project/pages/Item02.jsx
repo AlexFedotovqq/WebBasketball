@@ -89,6 +89,31 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
+  async function addToCart() {
+    let tronWeb;
+    if (window.tronLink.ready) {
+      tronWeb = tronLink.tronWeb;
+      console.log(tronWeb.defaultAddress.base58);
+    } else {
+      const res = await tronLink.request({ method: "tron_requestAccounts" });
+      if (res.code === 200) {
+        tronWeb = tronLink.tronWeb;
+      }
+    }
+
+    const ContractAddress = "TFMdgrgBmqrHpdbKYUtUY5UC65XXBvvwJY"; //contract address
+
+    try {
+      let contract = await tronWeb.contract().at(ContractAddress);
+      //Use call to execute a pure or view smart contract method.
+      // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
+      let name = await contract.mintShorts().send();
+      console.log("transaction ", name);
+    } catch (error) {
+      console.error("trigger smart contract error", error);
+    }
+  }
+
   return (
     <div className="bg-gray-200">
       <div className="pt-6 pb-16 sm:pb-24">
@@ -204,109 +229,107 @@ export default function Example() {
             </div>
 
             <div className="mt-8 lg:col-span-5">
-              <form>
-                {/* Color picker */}
-                <div>
-                  <h2 className="text-sm font-medium text-gray-900">Color</h2>
+              {/* Color picker */}
+              <div>
+                <h2 className="text-sm font-medium text-gray-900">Color</h2>
 
-                  <RadioGroup
-                    value={selectedColor}
-                    onChange={setSelectedColor}
-                    className="mt-2"
-                  >
-                    <RadioGroup.Label className="sr-only">
-                      {" "}
-                      Choose a color{" "}
-                    </RadioGroup.Label>
-                    <div className="flex items-center space-x-3">
-                      {product.colors.map((color) => (
-                        <RadioGroup.Option
-                          key={color.name}
-                          value={color}
-                          className={({ active, checked }) =>
-                            classNames(
-                              color.selectedColor,
-                              active && checked ? "ring ring-offset-1" : "",
-                              !active && checked ? "ring-2" : "",
-                              "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
-                            )
-                          }
-                        >
-                          <RadioGroup.Label as="span" className="sr-only">
-                            {" "}
-                            {color.name}{" "}
-                          </RadioGroup.Label>
-                          <span
-                            aria-hidden="true"
-                            className={classNames(
-                              color.bgColor,
-                              "h-8 w-8 border border-black border-opacity-10 rounded-full"
-                            )}
-                          />
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup>
-                </div>
-
-                {/* Size picker */}
-                <div className="mt-8">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-medium text-gray-900">Size</h2>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      See sizing chart
-                    </a>
-                  </div>
-
-                  <RadioGroup
-                    value={selectedSize}
-                    onChange={setSelectedSize}
-                    className="mt-2"
-                  >
-                    <RadioGroup.Label className="sr-only">
-                      {" "}
-                      Choose a size{" "}
-                    </RadioGroup.Label>
-                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
-                      {product.sizes.map((size) => (
-                        <RadioGroup.Option
-                          key={size.name}
-                          value={size}
-                          className={({ active, checked }) =>
-                            classNames(
-                              size.inStock
-                                ? "cursor-pointer focus:outline-none"
-                                : "opacity-25 cursor-not-allowed",
-                              active
-                                ? "ring-2 ring-offset-2 ring-indigo-500"
-                                : "",
-                              checked
-                                ? "bg-indigo-600 border-transparent text-white hover:bg-indigo-700"
-                                : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50",
-                              "border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1"
-                            )
-                          }
-                          disabled={!size.inStock}
-                        >
-                          <RadioGroup.Label as="span">
-                            {size.name}
-                          </RadioGroup.Label>
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup>
-                </div>
-
-                <button
-                  type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                <RadioGroup
+                  value={selectedColor}
+                  onChange={setSelectedColor}
+                  className="mt-2"
                 >
-                  Add to cart
-                </button>
-              </form>
+                  <RadioGroup.Label className="sr-only">
+                    {" "}
+                    Choose a color{" "}
+                  </RadioGroup.Label>
+                  <div className="flex items-center space-x-3">
+                    {product.colors.map((color) => (
+                      <RadioGroup.Option
+                        key={color.name}
+                        value={color}
+                        className={({ active, checked }) =>
+                          classNames(
+                            color.selectedColor,
+                            active && checked ? "ring ring-offset-1" : "",
+                            !active && checked ? "ring-2" : "",
+                            "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
+                          )
+                        }
+                      >
+                        <RadioGroup.Label as="span" className="sr-only">
+                          {" "}
+                          {color.name}{" "}
+                        </RadioGroup.Label>
+                        <span
+                          aria-hidden="true"
+                          className={classNames(
+                            color.bgColor,
+                            "h-8 w-8 border border-black border-opacity-10 rounded-full"
+                          )}
+                        />
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Size picker */}
+              <div className="mt-8">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-medium text-gray-900">Size</h2>
+                  <a
+                    href="#"
+                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    See sizing chart
+                  </a>
+                </div>
+
+                <RadioGroup
+                  value={selectedSize}
+                  onChange={setSelectedSize}
+                  className="mt-2"
+                >
+                  <RadioGroup.Label className="sr-only">
+                    {" "}
+                    Choose a size{" "}
+                  </RadioGroup.Label>
+                  <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                    {product.sizes.map((size) => (
+                      <RadioGroup.Option
+                        key={size.name}
+                        value={size}
+                        className={({ active, checked }) =>
+                          classNames(
+                            size.inStock
+                              ? "cursor-pointer focus:outline-none"
+                              : "opacity-25 cursor-not-allowed",
+                            active
+                              ? "ring-2 ring-offset-2 ring-indigo-500"
+                              : "",
+                            checked
+                              ? "bg-indigo-600 border-transparent text-white hover:bg-indigo-700"
+                              : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50",
+                            "border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1"
+                          )
+                        }
+                        disabled={!size.inStock}
+                      >
+                        <RadioGroup.Label as="span">
+                          {size.name}
+                        </RadioGroup.Label>
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <button
+                onClick={() => addToCart()}
+                className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Purchase
+              </button>
 
               {/* Product details */}
               <div className="mt-10">
