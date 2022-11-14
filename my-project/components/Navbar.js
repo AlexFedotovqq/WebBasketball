@@ -64,6 +64,7 @@ const Navbar = () => {
                     ))}
                   </div>
                 </div>
+                {/*
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <div className="dropdown relative">
@@ -93,6 +94,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
+                        */}
               </div>
             </div>
 
