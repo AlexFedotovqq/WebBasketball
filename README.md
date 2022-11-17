@@ -5,4 +5,4 @@
 # Important Links
 <p>1. Twitter - https://twitter.com/Web3Basketball</p>
 <p>2. YouTube video - https://youtu.be/afNBQ0piKhg</p>
-![](https://cdn.nba.com/manage/2022/09/GettyImages-1370244705-scaled-e1662759035178.jpg)
+![https://cdn.nba.com/manage/2022/09/GettyImages-1370244705-scaled-e1662759035178.jpg]()
