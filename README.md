@@ -28,3 +28,7 @@ We built the application using JavaScript, NextJS, React, Tailwind CSS, and Tron
 <p>2. YouTube video - https://youtu.be/afNBQ0piKhg</p>
 
 ![](https://cdn.nba.com/manage/2022/09/GettyImages-1370244705-scaled-e1662759035178.jpg)
+
+## Technical Details
+
+[ERC 1155](https://docs.openzeppelin.com/contracts/3.x/erc1155)
