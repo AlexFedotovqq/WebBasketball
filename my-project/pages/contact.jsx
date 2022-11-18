@@ -146,7 +146,7 @@ export default function Contact() {
                         </svg>
                         <span class="block ml-3 text-base text-black">
                           {" "}
-                          ewejwhekjwekwbekwe, Spain{" "}
+                          Barcelona, Spain{" "}
                         </span>
                       </div>
 
