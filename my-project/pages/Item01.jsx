@@ -87,7 +87,7 @@ export default function Example() {
     const contract = new ethers.Contract(contractAddress, abi, signer);
     await contract["mintBall"]({
       from: address,
-      value: ethers.utils.parseEther("0.01"),
+      value: ethers.utils.parseEther("0.1"),
     });
   }
 
