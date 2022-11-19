@@ -6,6 +6,11 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
+import { ethers } from "ethers";
+import { useAccount, useSigner, useNetwork } from "wagmi";
+
+import { getContractInfo } from "../utils/contracts";
+
 const product = {
   name: "Market Smiley 50th Anniversary Splatter Basketball Ball by Mr. A",
   price: "€64",
@@ -72,29 +77,16 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+  const { data: signer } = useSigner();
+
   async function addToCart() {
-    let tronWeb;
-    if (window.tronLink.ready) {
-      tronWeb = tronLink.tronWeb;
-      console.log(tronWeb.defaultAddress.base58);
-    } else {
-      const res = await tronLink.request({ method: "tron_requestAccounts" });
-      if (res.code === 200) {
-        tronWeb = tronLink.tronWeb;
-      }
-    }
+    const { contractAddress, abi } = getContractInfo(chain);
 
-    const ContractAddress = "TFMdgrgBmqrHpdbKYUtUY5UC65XXBvvwJY"; //contract address
+    const contract = new ethers.Contract(contractAddress, abi, signer);
 
-    try {
-      let contract = await tronWeb.contract().at(ContractAddress);
-      //Use call to execute a pure or view smart contract method.
-      // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
-      let name = await contract.mintBall().send();
-      console.log("transaction ", name);
-    } catch (error) {
-      console.error("trigger smart contract error", error);
-    }
+    await contract["mintBall"]({ from: address });
   }
 
   return (

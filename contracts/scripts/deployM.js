@@ -1,5 +1,5 @@
 async function main() {
-  const NFTcontract = await ethers.getContractFactory("MyERC1155NFT");
+  const NFTcontract = await ethers.getContractFactory("MumbaiERC1155NFT");
   const nftcontract = await NFTcontract.deploy();
 
   await nftcontract.deployed();

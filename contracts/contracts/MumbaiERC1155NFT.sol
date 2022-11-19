@@ -4,9 +4,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
-
-contract MyERC1155NFT is ERC1155 {
+contract MumbaiERC1155NFT is ERC1155 {
     string public name = "Web3Basketball";
     uint256 public constant Ball = 0;
     uint256 public constant Shorts = 1;
@@ -15,28 +13,28 @@ contract MyERC1155NFT is ERC1155 {
     int256 public constant BallPrice = 64 ** 14;
     int256 public constant ShortsPrice = 58 ** 14;
 
-    AggregatorV3Interface internal eth_usd_price_feed;
+    int256 public constant price = 120577422945;
 
     constructor() ERC1155("https://bafybeie2dsp3nlrnf4pnjbrjnqqujfxazxykegr6bhvit3jurbc5kwzpki.ipfs.nftstorage.link/{id}.json") {
-        eth_usd_price_feed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
     }
 
-    function getEthUsd() public view returns (int256) {
-         (
-            , int price, , , 
-        ) = eth_usd_price_feed.latestRoundData();
-    
-        return (price);
+    function getBallPrice() public pure returns (int256) {
+        return (BallPrice / price);
     }
+
+    function getShortsPrice() public pure returns (int256) {
+        return (ShortsPrice / price);
+    }
+
 
     function mintBall() public payable{
 
-        require(int(msg.value) >=  BallPrice / getEthUsd() , "Not enough ether to purchase NFTs.");
+        require(int(msg.value) >= getBallPrice(), "Not enough ether to purchase NFTs.");
         _mint(msg.sender, Ball, 1,"");
     }
 
     function mintShorts() public payable{
-        require(int(msg.value) >=  ShortsPrice / getEthUsd(), "Not enough ether to purchase NFTs.");
+        require(int(msg.value) >= getShortsPrice(), "Not enough ether to purchase NFTs.");
         _mint(msg.sender, Shorts, 1, "");
     }
 
