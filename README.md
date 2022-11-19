@@ -32,3 +32,7 @@ We built the application using JavaScript, NextJS, React, Tailwind CSS, and Tron
 ## Technical Details
 
 [ERC 1155](https://docs.openzeppelin.com/contracts/3.x/erc1155)
+
+[ChainLink Price Feed: contract addresses](https://docs.chain.link/data-feeds/price-feeds/addresses)
+
+[Ethers](https://docs.ethers.io/v5/getting-started/)

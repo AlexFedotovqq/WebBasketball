@@ -10,7 +10,7 @@ import { Layout } from "../components/Layout";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+  [alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({

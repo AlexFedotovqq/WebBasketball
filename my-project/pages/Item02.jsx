@@ -103,7 +103,10 @@ export default function Example() {
 
     const contract = new ethers.Contract(contractAddress, abi, signer);
 
-    await contract["mintShorts"]({ from: address });
+    await contract["mintShorts"]({
+      from: address,
+      value: ethers.utils.parseEther("0.01"),
+    });
   }
 
   return (
