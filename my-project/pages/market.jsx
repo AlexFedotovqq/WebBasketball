@@ -14,7 +14,7 @@ const products = [
     id: 2,
     name: "Nike Dri-FIT DNA+",
     href: "/Item02",
-    price: "$s58",
+    price: "$58",
     description: "",
     options: "Black,Blue,Orange",
     imageSrc:
