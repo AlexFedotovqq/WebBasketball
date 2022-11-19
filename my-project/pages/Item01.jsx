@@ -13,7 +13,7 @@ import { getContractInfo } from "../utils/contracts";
 
 const product = {
   name: "Market Smiley 50th Anniversary Splatter Basketball Ball by Mr. A",
-  price: "€64",
+  price: "$64",
   rating: 3.9,
   reviewCount: 5,
   href: "#",
