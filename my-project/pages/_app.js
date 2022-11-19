@@ -11,8 +11,12 @@ import { Layout } from "../components/Layout";
 const { chains, provider } = configureChains(
   [chain.goerli, chain.polygonMumbai],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }),
-    alchemyProvider({ apiKey: process.env.ALCHEMY_MUMBAI_KEY }),
+    alchemyProvider((chain) => {
+      if (chain.id === chain.goerli) {
+        return { apiKey: process.env.ALCHEMY_API_KEY };
+      }
+      return { apiKey: process.env.ALCHEMY_MUMBAI_KEY };
+    }),
     publicProvider(),
   ]
 );
