@@ -8,7 +8,7 @@ import { RadioGroup } from "@headlessui/react";
 
 const product = {
   name: "Nike Dri-FIT DNA+",
-  price: "€58",
+  price: "$58",
   rating: 4.9,
   reviewCount: 31,
   href: "#",

@@ -3,7 +3,7 @@ const products = [
     id: 1,
     name: "Market Smiley 50th Anniversary Splatter Basketball Ball by Mr. A",
     href: "/Item01",
-    price: "€64",
+    price: "$64",
     description: "",
     options: "Pink",
     imageSrc:
@@ -14,7 +14,7 @@ const products = [
     id: 2,
     name: "Nike Dri-FIT DNA+",
     href: "/Item02",
-    price: "€58",
+    price: "$s58",
     description: "",
     options: "Black,Blue,Orange",
     imageSrc:
