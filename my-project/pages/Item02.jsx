@@ -6,11 +6,6 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
-import { ethers } from "ethers";
-import { useAccount, useSigner, useNetwork } from "wagmi";
-
-import { getContractInfo } from "../utils/contracts";
-
 const product = {
   name: "Nike Dri-FIT DNA+",
   price: "$58",
@@ -94,20 +89,7 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
-  const { address } = useAccount();
-  const { chain } = useNetwork();
-  const { data: signer } = useSigner();
-
-  async function addToCart() {
-    const { contractAddress, abi } = getContractInfo(chain);
-
-    const contract = new ethers.Contract(contractAddress, abi, signer);
-
-    await contract["mintShorts"]({
-      from: address,
-      value: ethers.utils.parseEther("0.1"),
-    });
-  }
+  async function addToCart() {}
 
   return (
     <div className="bg-gray-200">

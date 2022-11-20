@@ -2,8 +2,6 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-
 const navigation = [
   { name: "Web3Basketball", href: "/" },
   { name: "For beginners", href: "/Beginners" },
@@ -68,14 +66,7 @@ const Navbar = () => {
 
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="dropdown relative">
-                      <ConnectButton
-                        accountStatus={{
-                          smallScreen: "avatar",
-                          largeScreen: "full",
-                        }}
-                      />
-                    </div>
+                    <div className="dropdown relative"></div>
                   </div>
                 </div>
               </div>

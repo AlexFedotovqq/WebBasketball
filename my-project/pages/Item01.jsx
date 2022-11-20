@@ -6,10 +6,16 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
-import { ethers } from "ethers";
-import { useAccount, useSigner, useNetwork } from "wagmi";
+import {
+  AptosClient,
+  AptosAccount,
+  FaucetClient,
+  TokenClient,
+  CoinClient,
+} from "aptos";
 
-import { getContractInfo } from "../utils/contracts";
+const NODE_URL = "https://fullnode.devnet.aptoslabs.com";
+const FAUCET_URL = "https://faucet.devnet.aptoslabs.com";
 
 const product = {
   name: "Market Smiley 50th Anniversary Splatter Basketball Ball by Mr. A",
@@ -77,18 +83,33 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
-  const { address } = useAccount();
-  const { chain } = useNetwork();
-  const { data: signer } = useSigner();
+  let collectionName = "Name";
+  const client = new AptosClient(NODE_URL);
+  const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL);
+
+  const tokenClient = new TokenClient(client);
+
+  const alice = new AptosAccount();
+  const bob = new AptosAccount();
 
   async function addToCart() {
-    const { contractAddress, abi } = getContractInfo(chain);
-
-    const contract = new ethers.Contract(contractAddress, abi, signer);
-    await contract["mintBall"]({
-      from: address,
-      value: ethers.utils.parseEther("0.1"),
-    });
+    await faucetClient.fundAccount(alice.address(), 100_000_000);
+    await faucetClient.fundAccount(bob.address(), 100_000_000);
+    const txnHash1 = await tokenClient.createCollection(
+      alice,
+      collectionName,
+      "Alice's simple collection",
+      "https://alice.com"
+    );
+    await client.waitForTransaction(txnHash1, { checkSuccess: true });
+    console.log(txnHash1);
+    const collectionData = await tokenClient.getCollectionData(
+      alice.address(),
+      collectionName
+    );
+    console.log(
+      `Alice's collection: ${JSON.stringify(collectionData, null, 4)}`
+    ); // <:!:section_6
   }
 
   return (
