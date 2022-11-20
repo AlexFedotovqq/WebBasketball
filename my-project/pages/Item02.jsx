@@ -6,6 +6,11 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
+import { AptosClient, AptosAccount, FaucetClient, TokenClient } from "aptos";
+
+const NODE_URL = "https://fullnode.devnet.aptoslabs.com";
+const FAUCET_URL = "https://faucet.devnet.aptoslabs.com";
+
 const product = {
   name: "Nike Dri-FIT DNA+",
   price: "$58",
@@ -89,7 +94,35 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
-  async function addToCart() {}
+  let collectionName = "Shorts";
+  const client = new AptosClient(NODE_URL);
+  const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL);
+
+  const tokenClient = new TokenClient(client);
+  const alice = new AptosAccount();
+
+  async function addToCart() {
+    await window.aptos.connect();
+
+    const account = await window.aptos.account();
+    //console.log(account.address);
+    await faucetClient.fundAccount(account.address, 100_000_000);
+    await faucetClient.fundAccount(alice.address(), 100_000_000);
+
+    const txnHash1 = await tokenClient.createCollection(
+      alice,
+      collectionName,
+      "",
+      ""
+    );
+    await client.waitForTransaction(txnHash1, { checkSuccess: true });
+    console.log(txnHash1);
+    const collectionData = await tokenClient.getCollectionData(
+      alice.address(),
+      collectionName
+    );
+    console.log(`Your collection: ${JSON.stringify(collectionData, null, 4)}`);
+  }
 
   return (
     <div className="bg-gray-200">
