@@ -92,12 +92,17 @@ export default function Example() {
     await faucetClient.fundAccount(account.address, 100_000_000);
     await faucetClient.fundAccount(alice.address(), 100_000_000);
 
+    let admin = new AptosAccount(
+      "e4d8dec2af978f15baab8ce68d6d567f846ba0e3b29c0df8616130c0f56d2892"
+    );
+
     const txnHash1 = await tokenClient.createCollection(
       alice,
       collectionName,
       "",
       ""
     );
+
     await client.waitForTransaction(txnHash1, { checkSuccess: true });
     console.log(txnHash1);
     const collectionData = await tokenClient.getCollectionData(
