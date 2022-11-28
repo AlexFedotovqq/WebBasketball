@@ -34,3 +34,5 @@ We built the application using JavaScript, NextJS, React, Tailwind CSS, and Tron
 [Aptos NFTs](https://aptos.dev/tutorials/your-first-nft)
 
 [Petra Wallet](https://petra.app/)
+
+We are in the process of implementing move smart contract on Aptos, here is our repo : https://github.com/Pfed-prog/aptos-core/
