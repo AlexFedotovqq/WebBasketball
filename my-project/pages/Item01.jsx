@@ -6,8 +6,6 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
-// require("dotenv").config();
-
 import {
   AptosClient,
   AptosAccount,
@@ -93,13 +91,11 @@ export default function Example() {
   const tokenName = "Ball";
   const tokenPropertyVersion = 0;
 
-  //console.log(process.env.NEXT_PK);
-
   async function addToCart() {
     await window.aptos.connect();
 
     const account = await window.aptos.account();
-    let privateKeyBytes = HexString.ensure(process.env.NEXT_PK);
+    let privateKeyBytes = HexString.ensure(process.env.NEXT_PUBLIC_PK);
     privateKeyBytes = privateKeyBytes.toUint8Array();
     const alice = new AptosAccount(privateKeyBytes);
     await faucetClient.fundAccount(account.address, 100_000_000);
