@@ -6,7 +6,15 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 
-import { AptosClient, AptosAccount, FaucetClient, TokenClient } from "aptos";
+// require("dotenv").config();
+
+import {
+  AptosClient,
+  AptosAccount,
+  FaucetClient,
+  TokenClient,
+  HexString,
+} from "aptos";
 
 const NODE_URL = "https://fullnode.devnet.aptoslabs.com";
 const FAUCET_URL = "https://faucet.devnet.aptoslabs.com";
@@ -77,39 +85,46 @@ export default function Example() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
-  let collectionName = "Ball";
   const client = new AptosClient(NODE_URL);
   const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL);
-
   const tokenClient = new TokenClient(client);
-  const alice = new AptosAccount();
+
+  const collectionName = "Web3Basketball";
+  const tokenName = "Ball";
+  const tokenPropertyVersion = 0;
+
+  //console.log(process.env.NEXT_PK);
 
   async function addToCart() {
     await window.aptos.connect();
 
     const account = await window.aptos.account();
-    //console.log(account.address);
+    let privateKeyBytes = HexString.ensure(process.env.NEXT_PK);
+    privateKeyBytes = privateKeyBytes.toUint8Array();
+    const alice = new AptosAccount(privateKeyBytes);
     await faucetClient.fundAccount(account.address, 100_000_000);
     await faucetClient.fundAccount(alice.address(), 100_000_000);
 
-    let admin = new AptosAccount(
-      "e4d8dec2af978f15baab8ce68d6d567f846ba0e3b29c0df8616130c0f56d2892"
-    );
-
-    const txnHash1 = await tokenClient.createCollection(
+    const txnHash1 = await tokenClient.offerToken(
       alice,
-      collectionName,
-      "",
-      ""
-    );
-
-    await client.waitForTransaction(txnHash1, { checkSuccess: true });
-    console.log(txnHash1);
-    const collectionData = await tokenClient.getCollectionData(
+      account.address,
       alice.address(),
-      collectionName
+      collectionName,
+      tokenName,
+      1,
+      tokenPropertyVersion
     );
-    console.log(`Your collection: ${JSON.stringify(collectionData, null, 4)}`);
+    await client.waitForTransaction(txnHash1, { checkSuccess: true });
+
+    /*     const txnHash2 = await tokenClient.claimToken(
+      account,
+      alice.address(),
+      alice.address(),
+      collectionName,
+      tokenName,
+      tokenPropertyVersion
+    );
+    await client.waitForTransaction(txnHash2, { checkSuccess: true }); */
   }
 
   return (

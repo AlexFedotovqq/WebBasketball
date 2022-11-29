@@ -16,7 +16,7 @@ const FAUCET_URL = "https://faucet.devnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
 const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL);
 
-const tokenClient = new TokenClient(client); // <:!:section_1b
+const tokenClient = new TokenClient(client);
 
 // Create a coin client for checking account balances.
 const coinClient = new CoinClient(client);
@@ -24,7 +24,6 @@ const coinClient = new CoinClient(client);
 // Create accounts.
 const privateKeyBytes = HexString.ensure(process.env.PK).toUint8Array();
 const alice = new AptosAccount(privateKeyBytes);
-// const bob = new AptosAccount();
 
 // Print out account addresses.
 console.log("=== Addresses ===");
@@ -53,7 +52,7 @@ const txnHash1 = await tokenClient.createCollection(
   collectionName,
   description,
   URI
-); // <:!:section_4
+);
 await client.waitForTransaction(txnHash1, { checkSuccess: true });
 
 const txnHash2 = await tokenClient.createToken(
