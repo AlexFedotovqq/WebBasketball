@@ -1,6 +1,12 @@
 async function main() {
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
+
+  console.log("Account balance:", (await deployer.getBalance()).toString());
   const NFTcontract = await ethers.getContractFactory("MumbaiERC1155NFT");
-  const nftcontract = await NFTcontract.deploy();
+  const nftcontract = await NFTcontract.deploy({
+    gasPrice: ethers.BigNumber.from(2000000000),
+  });
 
   await nftcontract.deployed();
 
